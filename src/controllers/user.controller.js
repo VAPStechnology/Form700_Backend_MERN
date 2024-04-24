@@ -17,7 +17,7 @@ const registrUser = asyncHandler( async (req, res) => {
  // return res
 
   const { username, email,fullname, password } = req.body
-  console.log(email);
+  //console.log(email);
   if (
     [fullname, email, username, password].some((item)=> item?.trim() === "")
   ){
