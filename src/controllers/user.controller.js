@@ -42,6 +42,11 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All fields are required")
     }
 
+    const containsAtSymbol = email.includes("@")
+    if(!containsAtSymbol){
+        throw new ApiError(400,"Email must have to contains @")
+    }
+
     const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     })
