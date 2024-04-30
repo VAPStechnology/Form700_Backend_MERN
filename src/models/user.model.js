@@ -27,10 +27,10 @@ const userSchema = new Schema({
         index: true
 
     },
-    avatar: {
-        type: String,//cloudinary url
-        required:true,
-    },
+    // avatar: {
+    //     type: String,//cloudinary url
+    //     required:true,
+    // },
     completedFormHistory: [
         {
             type: Schema.Types.ObjectId,
