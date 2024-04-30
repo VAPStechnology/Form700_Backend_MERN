@@ -1,33 +1,81 @@
 import mongoose, { Schema} from "mongoose";
-import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
+// import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 
 
 const formSchema = new Schema({
-    formFile:{
-        type: String, //cloudinary url
+    firstName: {
+        type: String,
         required: true
     },
-    title:{
+    lastName: {
         type: String,
-        required:true
+        required: true
     },
-
-    views:{
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true
+    },
+    phone: {
+        type: String,
+        required: true
+    },
+    acNo: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    dateOfBirth: {
+        type: Date,
+        required: true
+    },
+    licenseState: {
+        type: String,
+        required: true
+    },
+    ssn: {
+        type: String,
+        required: true
+    },
+    bankName: {
+        type: String,
+        required: true
+    },
+    loanAmount: {
         type: Number,
-        default: 0
+        required: true
     },
-    isPublished: {
-        type: Boolean,
-        default:true
+    city: {
+        type: String,
+        required: true
     },
-    ownwer: {
-        type: Schema.Types.ObjectId,
-        ref:"Admin"
+    zip: {
+        type: String,
+        required: true
+    },
+    licenseNumber: {
+        type: String,
+        required: true
+    },
+    ipAddress: {
+        type: String,
+        required: true
     }
-})
+},
 
-formSchema.plugin(mongooseAggregatePaginate)
+
+{ timestamps: true})
+
+// formSchema.plugin(mongooseAggregatePaginate)
 
 
 export const Forms = mongoose.model("Forms", formSchema);
