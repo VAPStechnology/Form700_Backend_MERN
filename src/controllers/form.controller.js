@@ -11,6 +11,7 @@ const createForm = asyncHandler(async (req, res) => {
 
 
     const { firstName, lastName, email, phone, acNo, address, state, dateOfBirth, licenseState, ssn, bankName, loanAmount, city, zip, licenseNumber, ipAddress } = req.body;
+    const user = req.user;
 
     // console.log(data)
 
@@ -45,7 +46,8 @@ const createForm = asyncHandler(async (req, res) => {
         city,
         zip,
         licenseNumber,
-        ipAddress});
+        ipAddress,
+         user:user._id});
 
 
 
@@ -64,7 +66,9 @@ const createForm = asyncHandler(async (req, res) => {
 })
 
 
+////////////////////////////////////////////////////////////////////////////////////////////
+
 
 export {
-    createForm
+    createForm,
 }
