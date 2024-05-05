@@ -1,6 +1,4 @@
 import mongoose, { Schema} from "mongoose";
-// import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
-
 
 
 const formSchema = new Schema({
@@ -82,7 +80,6 @@ const formSchema = new Schema({
 
 { timestamps: true})
 
-// formSchema.plugin(mongooseAggregatePaginate)
 
 
 export const Forms = mongoose.model("Forms", formSchema);

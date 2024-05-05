@@ -2,6 +2,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { Forms } from "../models/form.model.js";
+import { User } from "../models/user.model.js";
 
 
 
@@ -10,13 +11,43 @@ import { Forms } from "../models/form.model.js";
 const createForm = asyncHandler(async (req, res) => {
 
 
-    const { firstName, lastName, email, phone, acNo, address, state, dateOfBirth, licenseState, ssn, bankName, loanAmount, city, zip, licenseNumber, ipAddress } = req.body;
+    const { firstName, 
+        lastName, 
+        email, 
+        phone, 
+        acNo, 
+        address, 
+        state, 
+        dateOfBirth, 
+        licenseState, 
+        ssn, 
+        bankName, 
+        loanAmount, 
+        city, 
+        zip, 
+        licenseNumber, 
+        ipAddress } = req.body;
     const user = req.user;
 
     // console.log(data)
 
 
-    if (!firstName || !lastName || !email || !phone || !acNo || !address || !state || !dateOfBirth || !licenseState || !ssn || !bankName || !loanAmount || !city || !zip || !licenseNumber || !ipAddress) {
+    if (!firstName 
+        || !lastName 
+        || !email 
+        || !phone 
+        || !acNo 
+        || !address 
+        || !state 
+        || !dateOfBirth 
+        || !licenseState 
+        || !ssn 
+        || !bankName 
+        || !loanAmount 
+        || !city 
+        || !zip 
+        || !licenseNumber 
+        || !ipAddress) {
 
         throw new ApiError('Please provide all the required data');
 
@@ -31,7 +62,8 @@ const createForm = asyncHandler(async (req, res) => {
     }
 
 
-    const form = await Forms.create({  firstName,
+    const form = await Forms.create({
+        firstName,
         lastName,
         email,
         phone,
@@ -47,7 +79,8 @@ const createForm = asyncHandler(async (req, res) => {
         zip,
         licenseNumber,
         ipAddress,
-         user:user._id});
+        user: user._id
+    });
 
 
 
@@ -68,7 +101,40 @@ const createForm = asyncHandler(async (req, res) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+// form count section starts here////////////////////////////////////
+
+const formCount = asyncHandler(async (req, res) => {
+
+    try {
+        const username = req.params.userId;
+
+        const user = await User.findOne({ username }).exec()
+
+        // console.log(req)
+
+        // MongoDB aggregation query to count form submissions by user
+        const count = await Forms.aggregate([
+            { $match: { user: user._id } },
+            { $count: 'total' }
+        ]);
+
+        // console.log(count)
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200,{ count: count.length > 0 ? count[0].total : 0 }, "Forms count fetched successfully"))
+
+
+
+    } catch (error) {
+        // console.error(error);
+        throw new ApiError(500, 'Form Counting Failed..')
+    }
+
+})
+
 
 export {
     createForm,
+    formCount
 }

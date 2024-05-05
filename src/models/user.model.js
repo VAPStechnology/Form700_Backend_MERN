@@ -27,16 +27,6 @@ const userSchema = new Schema({
         index: true
 
     },
-    // avatar: {
-    //     type: String,//cloudinary url
-    //     required:true,
-    // },
-    completedFormHistory: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Form"
-        }
-    ],
     password: {
         type: String,
         required:[true,"Please provide a password"]
