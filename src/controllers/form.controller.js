@@ -13,7 +13,7 @@ const createForm = asyncHandler(async (req, res) => {
 
     const { firstName, 
         lastName, 
-        email, 
+        emailId, 
         phone, 
         acNo, 
         address, 
@@ -27,14 +27,16 @@ const createForm = asyncHandler(async (req, res) => {
         zip, 
         licenseNumber, 
         ipAddress } = req.body;
+
+
     const user = req.user;
 
-    // console.log(data)
+    // console.log(Loginuser)
 
 
     if (!firstName 
         || !lastName 
-        || !email 
+        || !emailId 
         || !phone 
         || !acNo 
         || !address 
@@ -47,25 +49,25 @@ const createForm = asyncHandler(async (req, res) => {
         || !city 
         || !zip 
         || !licenseNumber 
-        || !ipAddress) {
+        || !ipAddress
+        || !user) {
 
         throw new ApiError('Please provide all the required data');
 
     };
 
-    const existedUser = await Forms.findOne({
-        $or: [{ phone }, { email }]
-    })
+    // const existedForm = await Forms.findOne(Loginuser._ObjectId)
+    // console.log(existedForm)
 
-    if (existedUser) {
-        throw new ApiError(409, "form already submitted")
-    }
+    // if (existedForm) {
+    //     throw new ApiError(409, "form already submitted")
+    // }
 
 
     const form = await Forms.create({
         firstName,
         lastName,
-        email,
+        emailId,
         phone,
         acNo,
         address,
@@ -94,7 +96,10 @@ const createForm = asyncHandler(async (req, res) => {
 
     return res
         .status(200)
-        .json(new ApiResponse("Form created successfully", 200, createdForm));
+        .json(new ApiResponse(
+            "Form created successfully",
+             200, 
+             createdForm));
 
 })
 
@@ -122,7 +127,10 @@ const formCount = asyncHandler(async (req, res) => {
 
         return res
             .status(200)
-            .json(new ApiResponse(200,{ count: count.length > 0 ? count[0].total : 0 }, "Forms count fetched successfully"))
+            .json(new ApiResponse(
+                200,
+                { count: count.length > 0 ? count[0].total : 0 },
+                 "Forms count fetched successfully"))
 
 
 
