@@ -22,6 +22,7 @@ app.use(cookieParser());
 
 import userRouter from "./routes/user.routes.js"
 import formRouter from "./routes/form.routes.js"
+import adminRouter from "./routes/admin.routes.js"
 
 
 
@@ -29,6 +30,7 @@ import formRouter from "./routes/form.routes.js"
 
 app.use ("/api/v1/users", userRouter)
 app.use("/api/v1/forms", formRouter)
+app.use("/api/v1/admins", adminRouter)
 
 
 export default app;
