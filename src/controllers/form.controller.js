@@ -13,7 +13,7 @@ const createForm = asyncHandler(async (req, res) => {
 
     const { firstName, 
         lastName, 
-        emailId, 
+        
         phone, 
         acNo, 
         address, 
@@ -27,6 +27,22 @@ const createForm = asyncHandler(async (req, res) => {
         zip, 
         licenseNumber, 
         ipAddress } = req.body;
+        let emailId =req.body;
+
+        // Adding Random to Make unique Email to Submit/////
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        // Generate a random number between 1 and 100000000
+        const randomNumber = getRandomNumber(1, 100000000);
+        // console.log(randomNumber);
+        let stringNumber = randomNumber.toString();
+
+        emailId = emailId.emailId+stringNumber;
+
+        /////////////////////////////////////////////////////////////////////////
 
 
     const user = req.user;
@@ -56,12 +72,16 @@ const createForm = asyncHandler(async (req, res) => {
 
     };
 
-    // const existedForm = await Forms.findOne(Loginuser._ObjectId)
+    // const existedForm = await Forms.findOne({
+    //     $or: [{ acNo },]
+    // })
     // console.log(existedForm)
 
     // if (existedForm) {
     //     throw new ApiError(409, "form already submitted")
     // }
+
+
 
 
     const form = await Forms.create({
