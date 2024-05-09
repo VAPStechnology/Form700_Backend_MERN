@@ -29,39 +29,39 @@ adminSchema.pre("save", async function (next) {
     next();
 })
 
-adminSchema.methods.isPasswordCorrect = async function (password) {
+adminSchema.methods.isPasswordCorrect = async function(password) {
     return await bcrypt.compare(password, this.password)
 }
 
 
-adminSchema.methods.generateAccessToken = function () {
+
+adminSchema.methods.generateAccessToken = function(){
     return Jwt.sign(
-        {
-            _id: this._id,
-            email: this.email,
-            username: this.username,
-
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        {
-            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
-        }
-    )
-}
-
-adminSchema.methods.generateRefreshToken = function () {
+         {
+             _id: this._id,
+             email: this.email,
+             username: this.username
+ 
+         },
+         process.env.ACCESS_TOKEN_SECRET,
+         {
+             expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+         }
+     )
+ }
+ adminSchema.methods.generateRefreshToken = function(){
     return Jwt.sign(
-        {
-            _id: this._id,
-
-
-        },
-        process.env.REFRESH_TOKEN_SECRET,
-        {
-            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
-        }
-    )
-}
+         {
+             _id: this._id,
+            
+ 
+         },
+         process.env.REFRESH_TOKEN_SECRET,
+         {
+             expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+         }
+     )
+ }
 
 
 
