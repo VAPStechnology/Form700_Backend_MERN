@@ -6,6 +6,11 @@ const formSchema = new Schema({
         type: String,
         required: true
     },
+    // formNo: {
+    //     type: Number,
+    //     unique: true,
+    //     required: true
+    // },
     lastName: {
         type: String,
         required: true
@@ -13,7 +18,6 @@ const formSchema = new Schema({
     emailId: {
         type: String,
         required: true,
-        unique: true,
         lowercase: true
     },
     phone: {
