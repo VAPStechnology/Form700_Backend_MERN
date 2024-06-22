@@ -260,6 +260,41 @@ const updateAccountDetails = asyncHandler(async(req,res)=>{
     .json(new ApiResponse(200, user, "Account details updated successfully"))
 })
 
+////////////get all user from the data///////////////////////////////
+
+const getUser= asyncHandler(async(req,res)=>{
+    try {
+        const users = await User.find().lean(); // Retrieve all forms
+        res.json(new ApiResponse(200,users, "User fetched Successfully")); // Return the forms as JSON
+      } catch (error){
+        res.status(500)
+        .json(new ApiError(500, 'Error retrieving forms'))
+      }
+})
+
+////////////to delete the user///////////////////
+
+const deleteUser = asyncHandler(async(req,res)=>{
+    const username =req.body
+    try {
+        const result = await User.findOneAndDelete(username);
+    
+        if (!result) {
+          return res
+          .status(404)
+          .json(new ApiError(404, "User not found"));
+        }
+    
+       return res
+        .status(200)
+        .json(new ApiResponse(200, 'User Deleted Successfully'))
+      } catch (err) {
+       return res
+        .status(500)
+        .json(new ApiError(500, "Error deleting user",err.message))
+      }
+})
+
 
 
 
@@ -275,5 +310,7 @@ export {
     changeCurrentPassword,
     getCurrentUser,
     updateAccountDetails,
+    getUser,
+    deleteUser
 
 }

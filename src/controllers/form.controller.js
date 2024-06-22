@@ -161,8 +161,24 @@ const formCount = asyncHandler(async (req, res) => {
 
 })
 
+ //////////////////////getting all forms////////////////////
+
+ const getAllForm = asyncHandler(async(req,res)=>{
+    try {
+        const userId = req.user._id;
+        // console.log(userId)
+        const forms = await Forms.find({ user: userId }).lean();
+        return res
+        .status(200)
+        .json(new ApiResponse(200, forms, "Submitted forms fetched successfully"))
+    } catch (error) {
+        throw new ApiError(500 , "Submitted forms fetching failed..")
+    }
+ })
+
 
 export {
     createForm,
-    formCount
+    formCount,
+    getAllForm
 }
