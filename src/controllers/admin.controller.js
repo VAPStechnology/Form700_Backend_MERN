@@ -2,6 +2,7 @@ import { Admin } from "../models/admin.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { User } from "../models/user.model.js";
 // import bcrypt from "bcrypt"
 
 
@@ -145,8 +146,47 @@ const logOutAdmin = asyncHandler(async (req, res) => {
  
  })
 
+ //////////////////////////////////////////////////////////////
+ ////////////get all user from the data///////////////////////////////
+
+const getUser= asyncHandler(async(req,res)=>{
+    try {
+        const users = await User.find().lean(); // Retrieve all forms
+        res.json(new ApiResponse(200,users, "User fetched Successfully")); // Return the forms as JSON
+      } catch (error){
+        res.status(500)
+        .json(new ApiError(500, 'Error retrieving forms'))
+      }
+})
+
+////////////to delete the user///////////////////
+
+const deleteUser = asyncHandler(async(req,res)=>{
+    const username =req.body
+    try {
+        const result = await User.findOneAndDelete(username);
+    
+        if (!result) {
+          return res
+          .status(404)
+          .json(new ApiError(404, "User not found"));
+        }
+    
+       return res
+        .status(200)
+        .json(new ApiResponse(200, 'User Deleted Successfully'))
+      } catch (err) {
+       return res
+        .status(500)
+        .json(new ApiError(500, "Error deleting user",err.message))
+      }
+})
+
+
 export{
     registerAdmin,
     loginAdmin,
-    logOutAdmin
+    logOutAdmin,
+    getUser,
+    deleteUser,
 }
